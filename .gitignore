@@ -3,3 +3,7 @@ node_modules/
 *.log
 .DS_Store
 backend/database/*.db
+
+# Docker
+.docker/
+docker-compose.override.yml

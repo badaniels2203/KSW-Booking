@@ -150,6 +150,126 @@ npm run dev
 
 The frontend will be available at `http://localhost:3000`
 
+## Docker Installation (Recommended)
+
+Docker makes deployment simple and consistent across all environments. You can run the entire application with a single command.
+
+### Prerequisites
+- Docker (v20.10 or higher)
+- Docker Compose (v2.0 or higher)
+
+### Production Deployment with Docker
+
+1. **Clone the repository**
+```bash
+git clone <repository-url>
+cd Hello-Git
+```
+
+2. **Build and start all services**
+```bash
+docker-compose up -d
+```
+
+This will:
+- Build both backend and frontend containers
+- Initialize the database automatically
+- Start the services in detached mode
+- Persist database data in a Docker volume
+
+3. **Access the application**
+- Frontend: `http://localhost` (port 80)
+- Backend API: `http://localhost:3001`
+
+4. **View logs**
+```bash
+docker-compose logs -f
+```
+
+5. **Stop the application**
+```bash
+docker-compose down
+```
+
+6. **Stop and remove all data**
+```bash
+docker-compose down -v
+```
+
+### Development with Docker
+
+For development with hot-reloading and live code updates:
+
+1. **Start development environment**
+```bash
+docker-compose -f docker-compose.dev.yml up
+```
+
+This will:
+- Mount your local code as volumes for live updates
+- Enable hot-reloading for both frontend and backend
+- Use nodemon for backend auto-restart
+- Use Vite's HMR for frontend
+
+2. **Access the application**
+- Frontend: `http://localhost:3000`
+- Backend API: `http://localhost:3001`
+
+3. **Rebuild after dependency changes**
+```bash
+docker-compose -f docker-compose.dev.yml up --build
+```
+
+### Docker Commands Reference
+
+```bash
+# Start services
+docker-compose up -d
+
+# View logs
+docker-compose logs -f [service_name]
+
+# Stop services
+docker-compose stop
+
+# Restart services
+docker-compose restart
+
+# Remove containers
+docker-compose down
+
+# Remove containers and volumes
+docker-compose down -v
+
+# Rebuild containers
+docker-compose up --build
+
+# View running containers
+docker-compose ps
+
+# Execute commands in container
+docker-compose exec backend sh
+docker-compose exec frontend sh
+```
+
+### Database Management in Docker
+
+The SQLite database is stored in a Docker volume for persistence. To access or backup:
+
+```bash
+# Access the backend container
+docker-compose exec backend sh
+
+# Navigate to database directory
+cd database
+
+# Copy database out of container
+docker cp martial-arts-backend:/app/database/martial_arts.db ./backup.db
+
+# Copy database into container
+docker cp ./backup.db martial-arts-backend:/app/database/martial_arts.db
+```
+
 ## Usage Guide
 
 ### Initial Setup
