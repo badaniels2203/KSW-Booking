@@ -13,7 +13,7 @@ RUN npm install
 COPY . .
 
 # Build the application
-RUN npm run build
+RUN npm run build && ls -la /app/dist
 
 # Production stage
 FROM nginx:alpine
@@ -26,6 +26,9 @@ COPY --from=builder /app/dist /usr/share/nginx/html
 
 # Copy nginx configuration
 COPY nginx.conf /etc/nginx/conf.d/default.conf
+
+# Verify files were copied
+RUN ls -la /usr/share/nginx/html
 
 EXPOSE 80
 
